@@ -32,7 +32,7 @@ const UserEdit = (props: any) => {
     const submit = async (e: SyntheticEvent) => {
         e.preventDefault();
 
-        await axios.post(`users/${props.match.params.id}`, {
+        await axios.patch(`users/${props.match.params.id}`, {
             name,
             last_name,
             email,

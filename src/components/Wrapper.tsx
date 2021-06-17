@@ -13,18 +13,25 @@ const Wrapper = (props: any) => {
     useEffect(() => {
         (
             async () => {
-                try {
-                    const {data} = await axios.get('user');
+                if (localStorage.getItem('token')){
+                    axios.defaults.headers.common = {'Authorization': `Bearer ${localStorage.token}`}
 
-                    console.log(data)
-                    props.setUser(new User(
-                        data.id,
-                        data.name,
-                        data.last_name,
-                        data.email,
-                        data.role,
-                    ));
-                } catch (e) {
+                    try {
+                        const {data} = await axios.get('user');
+    
+                        console.log(data)
+                        props.setUser(new User(
+                            data.id,
+                            data.name,
+                            data.last_name,
+                            data.email,
+                            data.role,
+                        ));
+                    } catch (e) {    
+                        setRedirect(true);    
+                    }
+                }
+                else {
                     setRedirect(true);
                 }
             }

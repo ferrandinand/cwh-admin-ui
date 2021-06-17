@@ -64,7 +64,7 @@ const Projects = () => {
                                 <td>{project.group}</td>
                                 <td>
                                     <div className="btn-group mr-2">
-                                        <Link to={`/project/${project.id}/edit`}
+                                        <Link to={`/projects/${project.id}/edit`}
                                               className="btn btn-sm btn-outline-secondary">Edit</Link>
                                         <a href="#" className="btn btn-sm btn-outline-secondary"
                                            onClick={() => del(project.id)}

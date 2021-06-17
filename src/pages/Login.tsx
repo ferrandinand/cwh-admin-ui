@@ -5,21 +5,25 @@ import {Redirect} from 'react-router-dom';
 const Login = () => {
     const [username, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [redirect, setRedirect] = useState(false);
+    const [redirectToLogin, setRedirectToLogin] = useState(false);
 
     const submit = async (e: SyntheticEvent) => {
         e.preventDefault();
 
-        const {data} = await axios.post('auth/login', {
-            username,
-            password
-        });
-
-        localStorage.setItem('token', data.access_token)
-        setRedirect(true);
+        try {
+          const {data} = await axios.post('auth/login', {
+              username,
+              password
+          });
+          localStorage.setItem('token', data.access_token)
+          setRedirectToLogin(true);
+        } catch (err) {
+            localStorage.removeItem('token')
+        } 
     }
 
-    if (redirect) {
+
+    if (redirectToLogin) {
         return <Redirect to={'/'}/>;
     }
 
