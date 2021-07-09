@@ -56,6 +56,11 @@ const ProjectEdit = (props: any) => {
     return (
         <Wrapper>
             <form onSubmit={submit}>
+            <div className="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+                <div className="lh-1">
+                    Edit project
+                </div>
+            </div>
                 <div className="mb-3">
                     <label>Name</label>
                     <input className="form-control"
