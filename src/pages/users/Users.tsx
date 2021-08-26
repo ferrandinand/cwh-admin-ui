@@ -7,20 +7,20 @@ import Paginator from "../../components/Paginator";
 
 const Users = () => {
     const [users, setUsers] = useState([]);
-    const [page, setPage] = useState(1);
-    const [lastPage, setLastPage] = useState(0);
+    const [userPage, setUserPage] = useState(0);
+    const [nextUserPage, setNextUserPage] = useState(0);
 
     useEffect(() => {
         (
             async () => {
-                const {data} = await axios.get(`users?page_id=${page}`);
+                const {data} = await axios.get(`users?page_id=${userPage}`);
 
                 console.log(data)
                 setUsers(data);
                 //setLastPage(0);
             }
         )()
-    }, [page]);
+    }, [userPage]);
 
     const del = async (id: number) => {
         if (window.confirm('Are you sure you want to delete this record?')) {
@@ -71,7 +71,7 @@ const Users = () => {
                 </table>
             </div>
 
-            <Paginator page={page} lastPage={lastPage} pageChanged={setPage}/>
+            <Paginator page={userPage} nextPage={nextUserPage} pageChanged={setUserPage}/>
         </Wrapper>
     );
 }

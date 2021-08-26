@@ -7,24 +7,41 @@ import Paginator from "../../components/Paginator";
 
 const Projects = () => {
     const [projects, setProjects] = useState([]);
-    const [projectPage, setProjectPage] = useState(1);
-    const [lastProjectPage, setLastProjectPage] = useState(0);
+    const [page, setPage] = useState(1);
+    const [lastPage, setLastPage] = useState(false);
+    const [nextProjectPage, setNextProjectPage] = useState(1);
+    const [prevProjectPage, setPrevProjectPage] = useState(1);
+    const [nextProjectId, setNextProjectId] = useState(0);
+    const [prevProjectId, setPrevProjectId] = useState(0);
 
-
+    const PAGINATION = 20
     useEffect(() => {
         (
             async () => {
 
-                //Until pagination works
-                const page = 0;
+                var page_id=prevProjectId
+                if (page<=1) page_id=0
+                if (page>prevProjectPage){
+                    page_id=nextProjectId
+                    setPrevProjectPage(page-1)
+                }
 
-                const {data} = await axios.get(`project?page_id=${page}`);
+                const {data} = await axios.get(`project?page_id=${page_id}`);
+                
+                setNextProjectId(data.items[0].id);
+                setLastPage(true)
+                if(data.next_page_id != null){
+                    setNextProjectId(data.next_page_id);
+                    setNextProjectPage(page+1)
+                    setLastPage(false)
+                }
+ 
+                setPrevProjectId(data.items[0].id-PAGINATION)
                 setProjects(data.items);
-                setLastProjectPage(data);
-                //setLastPage(0);
+
             }
         )()
-    }, [projectPage]);
+    }, [page]);
 
     
     const del = async (id: number) => {
@@ -50,6 +67,7 @@ const Projects = () => {
                 <table className="table table-striped table-sm">
                     <thead>
                     <tr>
+                        <th>Id</th>
                         <th>Name</th>
                         <th>Type</th>
                         <th>Created By</th>
@@ -61,6 +79,7 @@ const Projects = () => {
                     {projects.map((project: Project) => {
                         return (
                             <tr key={project.id}>
+                                <td>{project.id}</td>
                                 <td>
                                     <Link to={`/projects/${project.id}/detail`}
                                         className="nav-underline nav-link">{project.name}</Link>
@@ -84,7 +103,7 @@ const Projects = () => {
                 </table>
             </div>
 
-            <Paginator page={projectPage} lastPage={lastProjectPage} pageChanged={setProjectPage}/>
+            <Paginator page={page} nextPage={nextProjectPage} lastPage={lastPage} pageChanged={setPage}/>
         </Wrapper>
     );
 }

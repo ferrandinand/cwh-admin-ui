@@ -19,7 +19,6 @@ const Wrapper = (props: any) => {
                     try {
                         const {data} = await axios.get('user');
     
-                        console.log(data)
                         props.setUser(new User(
                             data.id,
                             data.name,

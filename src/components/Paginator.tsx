@@ -2,18 +2,21 @@ import React from 'react';
 
 const Paginator = (props: {
     page: number,
-    lastPage: number,
+    nextPage: number,
+    lastPage: boolean,
     pageChanged: (page: number) => void
 }) => {
     const next = () => {
-        if (props.page < props.lastPage) {
+        if (props.page < props.nextPage && props.lastPage == false) {
             props.pageChanged(props.page + 1);
+            console.log("current es menor que next"+ props.page + " " + props.nextPage);
         }
     }
 
     const prev = () => {
         if (props.page >= 1) {
             props.pageChanged(props.page - 1);
+            console.log("prev menos"+ props.page );
         }
     }
 
