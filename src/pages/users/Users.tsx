@@ -8,6 +8,7 @@ import Paginator from "../../components/Paginator";
 const Users = () => {
     const [users, setUsers] = useState([]);
     const [userPage, setUserPage] = useState(0);
+    const [lastPage, setLastPage] = useState(false);
     const [nextUserPage, setNextUserPage] = useState(0);
 
     useEffect(() => {
@@ -71,7 +72,7 @@ const Users = () => {
                 </table>
             </div>
 
-            <Paginator page={userPage} nextPage={nextUserPage} pageChanged={setUserPage}/>
+            <Paginator page={userPage} nextPage={nextUserPage} lastPage={lastPage}  pageChanged={setUserPage}/>
         </Wrapper>
     );
 }

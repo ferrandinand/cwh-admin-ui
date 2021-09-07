@@ -9,14 +9,12 @@ const Paginator = (props: {
     const next = () => {
         if (props.page < props.nextPage && props.lastPage == false) {
             props.pageChanged(props.page + 1);
-            console.log("current es menor que next"+ props.page + " " + props.nextPage);
         }
     }
 
     const prev = () => {
         if (props.page >= 1) {
             props.pageChanged(props.page - 1);
-            console.log("prev menos"+ props.page );
         }
     }
 
